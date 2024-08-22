@@ -1,0 +1,112 @@
+/* Default (Light Mode) */
+:root {
+    --bg-color: #ECECDA;
+    --text-color: #0E2F56;
+    --button-bg-color: #364968;
+    --button-text-color: #FCF8E8;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+button {
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: larger;
+}
+
+button:hover{
+    opacity: 0.8;
+}
+
+button:disabled{
+    background-color: gray;
+}
+
+/* Dark Mode (Preference-based) */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #0E2F56;
+        --text-color: #ECECDA;
+        --button-bg-color: #FCF8E8;
+        --button-text-color: #364968;
+    }
+}
+
+#photo{
+    visibility: hidden;
+    display: none;
+}
+
+.mainDiv {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+img, video{
+    display: flex;
+    margin: 1rem auto;
+    border-radius: 10px;
+    border: 2px solid var(--button-text-color);
+}
+
+#prediction-text{
+    position: absolute;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    top: -1000px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-size: large;
+    z-index: 1000;
+}
+
+
+.text-animate {
+    animation: slideInFromTop 2s ease-out forwards;
+}
+
+@keyframes slideInFromTop {
+    0% {
+        top: -1000px;
+        opacity: 0;
+    }
+    100% {
+        top: 0px;
+        opacity: 1;
+    }
+}
+
+/* Media Queries for additional control */
+@media (max-width: 768px) {
+    img, video {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    img, video {
+        max-width: 80%;
+        height: auto;
+    }
+}
+
+@media (min-width: 1025px) {
+    img, video {
+        max-width: 60%;
+        height: auto;
+    }
+}

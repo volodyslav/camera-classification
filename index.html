@@ -5,12 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fruit and Vegetables</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/ml5@1/dist/ml5.js"></script>
 </head>
 <body>
-    <video autoplay id="videoMain"></video>
-    <canvas id="canvasMain" style="display: none;"></canvas>
-    <button title="take picure" id="take-picture">Take picture</button>
-    <img id="photo" alt="Captured Photo"/>
+    <div class="mainDiv">
+        <p id="prediction-text">Hello</p>
+        <video autoplay id="videoMain"></video>
+        <img id="photo" alt="Captured Photo"/>
+        <canvas id="canvasMain" style="display: none;"></canvas>
+        <div style=" display: flex; gap: 10px; margin: auto;">
+            <button title="take picture" id="take-picture">Take picture</button>
+            <button disabled title="show video" id="show-video">Show video</button>
+            <button  title="change camera" id="change-camera">Camera</button>
+        </div>
+       
+        
+    </div>
 
     <script src="main.js"></script>
 </body>
