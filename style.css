@@ -78,6 +78,8 @@ img, video{
     animation: slideInFromTop 2s ease-out forwards;
 }
 
+
+
 @keyframes slideInFromTop {
     0% {
         top: -1000px;

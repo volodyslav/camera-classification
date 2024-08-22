@@ -12,11 +12,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const classifier = ml5.imageClassifier("MobileNet");
 
     changeCamera.addEventListener("change-camera", () => {
-        if (camera === "user") {
-            camera = "environment";
-        }else if (camera === "environment") {
-            camera = "user";
+        try{
+            if (camera === "user") {
+                camera = "environment";
+            }else if (camera === "environment") {
+                camera = "user";
+            }
+        }catch(e){
+            console.error(e);
         }
+        
     });
 
     //enviroment - rear , user - front camera
@@ -25,7 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
         audio: false
     }
 
-    console.log(camera)
     navigator.mediaDevices.getUserMedia(constaints)
         .then(steam => {
              videoMain.srcObject = steam;
@@ -65,8 +69,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function gotResult(result){
         console.log(result);
-        predictionText.innerText = `Prediction: ${result[0].label}`
-        predictionText.classList.add('text-animate');
+        try{
+            if (result.length > 0) {
+                predictionText.innerText = `Prediction: ${result[0].label}`
+                predictionText.classList.add('text-animate');
+            }
+        }catch(e){
+            console.error(e);
+            predictionText.innerText = `Cant't find prediction`
+            predictionText.classList.add('text-animate');
+        }
+        
     }
 
     showVideoBtn.addEventListener('click', () => {
