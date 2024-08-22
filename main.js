@@ -7,37 +7,47 @@ document.addEventListener("DOMContentLoaded", () => {
     const predictionText = document.querySelector("#prediction-text");
     const changeCamera = document.querySelector("#change-camera");
 
-    let camera = "user";
-
     const classifier = ml5.imageClassifier("MobileNet");
 
+    let camera = "environment";
+
+    const updateConstraints = () => {
+        return {
+            video: { facingMode: camera },
+            audio: false
+        };
+    };
+
+    let constraints = updateConstraints();
+
+    const startVideoStream = () => {
+        navigator.mediaDevices.getUserMedia(constraints)
+            .then(stream => {
+                videoMain.srcObject = stream;
+                videoMain.play();
+            })
+            .catch(err => {
+                console.error("Error getting user media", err);
+            });
+    };
+
+    // Start video stream with initial constraints
+    startVideoStream();
+
     changeCamera.addEventListener("change-camera", () => {
-        try{
-            if (camera === "user") {
-                camera = "environment";
-            }else if (camera === "environment") {
-                camera = "user";
-            }
-        }catch(e){
+        try {
+            camera = (camera === "user") ? "environment" : "user";
+            constraints = updateConstraints();
+            
+            // Restart the video stream with new constraints
+            videoMain.srcObject?.getTracks().forEach(track => track.stop()); // Stop previous tracks
+            startVideoStream();
+
+        } catch (e) {
             console.error(e);
         }
-        
     });
-
-    //enviroment - rear , user - front camera
-    const constaints = {
-        video: { facingMode: camera  },
-        audio: false
-    }
-
-    navigator.mediaDevices.getUserMedia(constaints)
-        .then(steam => {
-             videoMain.srcObject = steam;
-             videoMain.play();
-        })
-        .catch(err => {
-            console.error("Error getting user media", err);
-        })    
+   
 
     pictureBtn.addEventListener('click', () => {
         canvasMain.width = videoMain.videoWidth;
